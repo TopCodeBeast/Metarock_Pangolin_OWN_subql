@@ -104,11 +104,11 @@ async function send(remark: RemarkResult) {
     validateInteraction(nft, interaction);
     isOwnerOrElseError(nft, remark.caller);
     // isAccountValidOrElseError(interaction.metadata)
+    logger.warn(`[SEND!!] ${interaction.metadata} ${remark.caller}`);
 
     nft.currentOwner = interaction.metadata;
     nft.price = BigInt(0);
-    // nft.events.push(eventFrom(RmrkEvent.SEND, remark, interaction.metadata));
-    nft.events.push(eventFrom(RmrkEvent.SEND, remark, remark.caller));
+    nft.events.push(eventFrom(RmrkEvent.SEND, remark, interaction.metadata));
     nft.updatedAt = remark.timestamp;
     await nft.save();
   } catch (e) {
