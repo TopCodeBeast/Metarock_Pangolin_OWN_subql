@@ -60,8 +60,6 @@ async function mintNFT(remark: RemarkResult) {
   let nft = null;
   try {
     nft = NFTUtils.unwrap(remark.value) as NFT;
-    logger.error(`[mintNFT-nft] ${nft.currentOwner} `);
-
     canOrElseError<string>(exists, nft.collection, true);
     const collection = await CollectionEntity.get(nft.collection);
     canOrElseError<CollectionEntity>(exists, collection, true);
@@ -104,7 +102,6 @@ async function send(remark: RemarkResult) {
     validateInteraction(nft, interaction);
     isOwnerOrElseError(nft, remark.caller);
     // isAccountValidOrElseError(interaction.metadata)
-    logger.warn(`[SEND!!] ${interaction.metadata} ${remark.caller}`);
 
     nft.currentOwner = interaction.metadata;
     nft.price = BigInt(0);
